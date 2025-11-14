@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видео</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        #play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        #play-button:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        #play-button::after {
+            content: '▶';
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <button id="play-button"></button>
+        <iframe 
+            id="video-frame"
+            src="https://streamable.com/e/j02l3o?autoplay=0&muted=0"
+            allow="autoplay; fullscreen"
+            allowfullscreen>
+        </iframe>
+    </div>
+    
+    <script>
+        const playButton = document.getElementById('play-button');
+        const videoFrame = document.getElementById('video-frame');
+        
+        playButton.addEventListener('click', function() {
+            // Запускаем видео с автоплеем
+            videoFrame.src = "https://streamable.com/e/j02l3o?autoplay=1";
+            
+            // Скрываем кнопку
+            playButton.style.display = 'none';
+            
+            // Пытаемся открыть на полный экран
+            if (videoFrame.requestFullscreen) {
+                videoFrame.requestFullscreen();
+            } else if (videoFrame.webkitRequestFullscreen) {
+                videoFrame.webkitRequestFullscreen();
+            } else if (videoFrame.msRequestFullscreen) {
+                videoFrame.msRequestFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
